@@ -1,6 +1,3 @@
-from format.class_format import SampleFormat
-
-
 class TClass:
 
     def __new__(cls):
@@ -32,7 +29,3 @@ class TClass:
     @staticmethod
     def ii():
         pass
-
-
-result = SampleFormat(TClass).format()
-print(result)

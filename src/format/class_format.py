@@ -2,11 +2,11 @@ import inspect
 import re
 
 
-class SampleFormat:
+class ClassFormat:
 
-    def __init__(self, obj) -> None:
-        self.obj = obj
-        self.class_name = self.obj.__name__
+    def __init__(self) -> None:
+        self._cls_obj = None
+        self._cls_name = None
 
         self.result = ""
 
@@ -23,7 +23,7 @@ class SampleFormat:
         self._private = {}
 
     def cache_one(self, code):
-        if f"class {self.class_name}" in code:
+        if f"class {self._cls_name}" in code:
             self._class = code
         elif "def __new__" in code:
             self._new = code
@@ -80,8 +80,10 @@ class SampleFormat:
             result += dt[key]
         return result
 
-    def format(self):
-        lines, start = inspect.getsourcelines(self.obj)
+    def format(self, cls_obj):
+        self._cls_obj = cls_obj
+        self._cls_name = self._cls_obj.__name__
+        lines, start = inspect.getsourcelines(self._cls_obj)
         lines.append("")
         lines.append("")
 
